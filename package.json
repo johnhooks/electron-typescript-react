@@ -1,0 +1,74 @@
+{
+  "name": "electron-typescript-react",
+  "version": "0.1.0",
+  "description": "",
+  "main": "build/main.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:renderer\"  \"npm run dev:main\" \"npm run dev:electron\" -n renderer,main,electron -c cyan,magenta,green",
+    "dev:main": "cross-env NODE_ENV=development webpack --config config/electron.webpack.config.js --mode development",
+    "dev:renderer": "cross-env NODE_ENV=development webpack serve --config config/react.webpack.config.js --mode development",
+    "dev:electron": "wait-on http-get://localhost:4000/ && npm run start:electron",
+    "start:electron": "cross-env NODE_ENV=development ELECTRON_DISABLE_SECURITY_WARNINGS=true nodemon --exec \"electron .\" --watch build/main.js",
+    "build": "npm run build:electron && npm run build:react",
+    "build:run": "npm-run-all build start:electron",
+    "build:electron": "webpack --config config/electron.webpack.config.js",
+    "build:react": "webpack --config config/react.webpack.config.js",
+    "postinstall": "electron-builder install-app-deps",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John Hooks <bitmachina@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "electron-devtools-installer": "^3.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
+    "@babel/preset-typescript": "^7.12.1",
+    "@types/electron-devtools-installer": "^2.2.0",
+    "@types/node": "^14.14.7",
+    "@types/react": "^16.9.56",
+    "@types/react-dom": "^16.9.9",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
+    "babel-loader": "^8.2.1",
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.2",
+    "electron": "^11.0.1",
+    "electron-builder": "^22.9.1",
+    "eslint": "^7.13.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-react": "^7.21.5",
+    "html-webpack-plugin": "^4.5.0",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "typescript": "^4.0.5",
+    "wait-on": "^5.2.0",
+    "webpack": "^5.5.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not ie <= 11",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "test/*",
+      "docs/*"
+    ],
+    "delay": "1000"
+  }
+}
