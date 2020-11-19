@@ -2,7 +2,7 @@
   "name": "electron-typescript-react",
   "version": "0.1.0",
   "description": "",
-  "main": "build/main.js",
+  "main": "./build/main.js",
   "scripts": {
     "dev": "concurrently \"npm run dev:renderer\"  \"npm run dev:main\" \"npm run dev:electron\" -n renderer,main,electron -c cyan,magenta,green",
     "dev:main": "cross-env NODE_ENV=development webpack --config config/electron.webpack.config.js --mode development",
@@ -10,11 +10,13 @@
     "dev:electron": "wait-on http-get://localhost:4000/ && npm run start:electron",
     "start:electron": "cross-env NODE_ENV=development ELECTRON_DISABLE_SECURITY_WARNINGS=true nodemon --exec \"electron .\" --watch build/main.js",
     "build": "npm run build:electron && npm run build:react",
-    "build:run": "npm-run-all build start:electron",
+    "build:run": "npm run build && npm run start:electron",
     "build:electron": "webpack --config config/electron.webpack.config.js",
     "build:react": "webpack --config config/react.webpack.config.js",
     "postinstall": "electron-builder install-app-deps",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "package": "npm run build && npm run package:dist",
+    "package:build": "electron-builder --dir",
+    "test": "jest"
   },
   "author": "John Hooks <bitmachina@outlook.com>",
   "license": "MIT",
@@ -26,7 +28,10 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.5",
     "@babel/preset-typescript": "^7.12.1",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.1.2",
     "@types/electron-devtools-installer": "^2.2.0",
+    "@types/jest": "^26.0.15",
     "@types/node": "^14.14.7",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
@@ -41,15 +46,30 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-react": "^7.21.5",
     "html-webpack-plugin": "^4.5.0",
+    "jest": "^26.6.3",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "ts-jest": "^26.4.4",
     "typescript": "^4.0.5",
     "wait-on": "^5.2.0",
     "webpack": "^5.5.0",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0"
+  },
+  "build": {
+    "appId": "your.id",
+    "mac": {
+      "category": "public.app-category.video"
+    },
+    "directories": {
+      "output": "packages"
+    },
+    "files": [
+      "package.json",
+      "build/**"
+    ]
   },
   "browserslist": {
     "production": [

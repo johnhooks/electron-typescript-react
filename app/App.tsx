@@ -3,7 +3,7 @@ import React from 'react'
 const App: React.FunctionComponent = () => {
   return (
     <>
-      <p>Hello John</p>
+      <p>Hello World</p>
     </>
   )
 }
