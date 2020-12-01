@@ -1,18 +1,20 @@
 {
   "name": "electron-typescript-react",
   "version": "0.1.0",
-  "description": "",
+  "description": "Electron/TypeScript/React Boilerplate",
   "main": "./build/main.js",
   "scripts": {
-    "dev": "concurrently \"npm run dev:renderer\"  \"npm run dev:main\" \"npm run dev:electron\" -n renderer,main,electron -c cyan,magenta,green",
+    "dev": "concurrently \"npm run dev:preload\" \"npm run dev:renderer\"  \"npm run dev:main\" \"npm run dev:electron\" -n preload,renderer,main,electron -c cyan,cyan,magenta,green",
     "dev:main": "cross-env NODE_ENV=development webpack --config config/electron.webpack.config.js --mode development",
-    "dev:renderer": "cross-env NODE_ENV=development webpack serve --config config/react.webpack.config.js --mode development",
+    "dev:preload": "cross-env NODE_ENV=development webpack --watch --config config/preload.webpack.config.js --mode development",
+    "dev:renderer": "cross-env NODE_ENV=development webpack serve --config config/renderer.webpack.config.js --mode development",
     "dev:electron": "wait-on http-get://localhost:4000/ && npm run start:electron",
     "start:electron": "cross-env NODE_ENV=development ELECTRON_DISABLE_SECURITY_WARNINGS=true nodemon --exec \"electron .\" --watch build/main.js",
-    "build": "npm run build:electron && npm run build:react",
+    "build": "npm run build:electron && npm run build:preload && npm run build:renderer",
     "build:run": "npm run build && npm run start:electron",
     "build:electron": "webpack --config config/electron.webpack.config.js",
-    "build:react": "webpack --config config/react.webpack.config.js",
+    "build:preload": "webpack --config config/preload.webpack.config.js",
+    "build:renderer": "webpack --config config/renderer.webpack.config.js",
     "postinstall": "electron-builder install-app-deps",
     "package": "npm run build && npm run package:dist",
     "package:build": "electron-builder --dir",
@@ -21,10 +23,13 @@
   "author": "John Hooks <bitmachina@outlook.com>",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.12.5",
     "electron-devtools-installer": "^3.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.5",
     "@babel/preset-typescript": "^7.12.1",
@@ -72,17 +77,7 @@
     ]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not ie <= 11",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "electron": "11"
   },
   "nodemonConfig": {
     "ignore": [

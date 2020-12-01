@@ -5,4 +5,3 @@
 ## To Install
 
 - [ ] - `electron-is-dev`
-- [ ] - `electron-devtools-installer`

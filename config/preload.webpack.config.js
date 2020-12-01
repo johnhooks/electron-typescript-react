@@ -1,5 +1,4 @@
 const path = require("path");
-const webpack = require("webpack");
 
 const rootPath = path.resolve(__dirname, "..");
 
@@ -7,11 +6,11 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
-  devtool: "source-map",
+  // devtool: "source-map",
   entry: {
-    main: path.resolve(rootPath, "app", "main.ts"),
+    preload: path.resolve(rootPath, "app", "preload.ts"),
   },
-  target: "electron-main",
+  target: "electron-preload",
   module: {
     rules: [
       {
@@ -29,11 +28,5 @@ module.exports = {
   output: {
     path: path.resolve(rootPath, "build"),
     filename: "[name].js",
-  },
-  plugins: [
-    new webpack.ExternalsPlugin("commonjs", ["electron-devtools-installer"]),
-  ],
-  optimization: {
-    minimize: false,
   },
 };
