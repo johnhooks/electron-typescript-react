@@ -17,10 +17,11 @@
     "resolveJsonModule": true,
     // "isolatedModules": true,
     "jsx": "react",
+    "typeRoots": ["./@types", "./node_modules/@types"]
   },
   "include": [
-    "app/**/*.ts",
-    "app/**/*.tsx"
+    "@types/",
+    "app/",
   ],
   "exclude": [
     "node_modules"
