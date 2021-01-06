@@ -23,7 +23,6 @@
   "author": "John Hooks <bitmachina@outlook.com>",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
     "electron-devtools-installer": "^3.1.1"
   },
   "devDependencies": {
@@ -38,8 +37,8 @@
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/jest": "^26.0.19",
     "@types/node": "^14.14.20",
-    "@types/react": "^16.14.2",
-    "@types/react-dom": "^16.9.10",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
     "babel-loader": "^8.2.2",
